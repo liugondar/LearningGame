@@ -1,5 +1,8 @@
 #include"main.h"
 
+Game* game;
+GameObject* gameObject;
+
 /// Create a window then display and running until exit message send
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	LPSTR lpCmdLine, int nCmdShow)
@@ -7,6 +10,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	HWND hWnd = createGameWindow(hInstance, nCmdShow,
 		SCREEN_WIDTH, SCREEN_HEIGHT);
 
+	game = Game::getInstance();
+	game->init(hWnd);
+
+	loadResources();
 	run();
 
 	return 0;
@@ -93,9 +100,42 @@ int run() {
 		auto dt = now - frameStart;
 		if (dt >= tickPerFrame) {
 			frameStart = now;
-
+			update( dt);
+			render();
 		}
 		else Sleep(tickPerFrame - dt);
 	}
 	return 1;
+}
+
+void loadResources() {
+	gameObject = new GameObject(MARIO_TEXTURE_PATH );
+}
+
+void update(DWORD dt) {
+	gameObject->update(dt);
+}
+
+void render() {
+	LPDIRECT3DDEVICE9 d3ddv = game->getDirect3DDevice();
+	LPDIRECT3DSURFACE9 bb = game->getBackBuffer();
+	LPD3DXSPRITE spriteHandler = game->getSpriteHandler();
+
+	if (d3ddv->BeginScene())
+	{
+		// Clear back buffer with a color
+		d3ddv->ColorFill(bb, NULL, BACKGROUND_COLOR);
+
+		spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
+
+
+		gameObject->render();
+
+
+		spriteHandler->End();
+		d3ddv->EndScene();
+	}
+
+	// Display back buffer content to the screen
+	d3ddv->Present(NULL, NULL, NULL, NULL);
 }
