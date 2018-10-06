@@ -1,5 +1,4 @@
 #pragma once
-
 #define WINDOW_CLASS_NAME L"SampleWindow"
 #define MAIN_WINDOW_TITLE L"01 - Skeleton"
 

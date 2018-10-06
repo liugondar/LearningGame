@@ -2,8 +2,15 @@
 #include <Windows.h>
 #include <d3d9.h>
 #include <d3dx9.h>
+#include <unordered_map>
+#include"debug.h"
+#include <dinput.h>
 
-#pragma comment(lib,"d3d9.lib") 
+#include "KeyboardHandler.h"
+
+#define KEYBOARD_BUFFER_SIZE 1024
+#define DIRECTINPUT_VERSION 0x0800
+
 
 class Game
 {
@@ -17,16 +24,32 @@ private:
 	LPDIRECT3DSURFACE9 backBuffer = NULL; 
 	LPD3DXSPRITE spriteHandler = NULL;  	// Sprite helper library to help us draw 2D image on the screen 
 
+	LPDIRECTINPUT8       di;		// The DirectInput object         
+	LPDIRECTINPUTDEVICE8 didv;		// The keyboard device 
+	BYTE  keyStates[256];			// DirectInput keyboard state buffer 
+	DIDEVICEOBJECTDATA keyEvents[KEYBOARD_BUFFER_SIZE];		// Buffered keyboard data
+	KeyboardHandler* keyHandler;
+
 public:
 	void init(HWND hWnd);
-	void draw(float x, float y, LPDIRECT3DTEXTURE9 texture);
+	void draw(float x, float y, LPDIRECT3DTEXTURE9 texture,
+		int left,int right, int top, int bottom);
+
 	static Game * getInstance() {
 		if (instance == NULL) instance = new Game();
 		return instance;
 	};
+
+	// handle direct x 
 	LPDIRECT3DDEVICE9 getDirect3DDevice() { return this->d3ddv; }
 	LPDIRECT3DSURFACE9 getBackBuffer() { return backBuffer; }
 	LPD3DXSPRITE getSpriteHandler() { return this->spriteHandler; }
+
+	// Handle keyboard
+	void processKeyboard();
+	int isKeyDown(int keyCode);
+	void initKeyboard(KeyboardHandler* handler);
+
 	~Game();
 };
 

@@ -1,7 +1,34 @@
 #include"main.h"
 
 Game* game;
-GameObject* gameObject;
+Mario* mario;
+SampleKeyHander * keyHandler;
+
+/// Create keyboard handler for main program
+
+void SampleKeyHander::OnKeyDown(int KeyCode)
+{
+	switch (KeyCode)
+	{
+	case DIK_SPACE:
+		mario->setState(MARIO_STATE_JUMP);
+		break;
+	}
+}
+
+void SampleKeyHander::OnKeyUp(int KeyCode)
+{
+}
+
+void SampleKeyHander::KeyState(BYTE *states)
+{
+	if (game->isKeyDown(DIK_RIGHT))
+		mario->setState(MARIO_STATE_WALKING_RIGHT);
+	else if (game->isKeyDown(DIK_LEFT))
+		mario->setState(MARIO_STATE_WALKING_LEFT);
+	else mario->setState(MARIO_STATE_IDLE);
+}
+
 
 /// Create a window then display and running until exit message send
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
@@ -13,7 +40,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	game = Game::getInstance();
 	game->init(hWnd);
 
+	keyHandler = new SampleKeyHander();
+	game->initKeyboard(keyHandler);
+
 	loadResources();
+	//SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
+
 	run();
 
 	return 0;
@@ -55,7 +87,6 @@ HWND createGameWindow(HINSTANCE hInstance, int nCmdShow,
 			NULL);
 	if (!hWnd)
 	{
-		OutputDebugString(L"[ERROR] CreateWindow failed");
 		DWORD ErrCode = GetLastError();
 		return FALSE;
 	}
@@ -100,6 +131,7 @@ int run() {
 		auto dt = now - frameStart;
 		if (dt >= tickPerFrame) {
 			frameStart = now;
+			game->processKeyboard();
 			update( dt);
 			render();
 		}
@@ -109,11 +141,60 @@ int run() {
 }
 
 void loadResources() {
-	gameObject = new GameObject(MARIO_TEXTURE_PATH );
+
+	TextureManager* textureManager = TextureManager::getInstance();
+
+	textureManager->add(ID_TEX_MARIO, L"textures\\mario.png",
+		D3DCOLOR_XRGB(176, 224, 248));
+	////textures->Add(ID_ENEMY_TEXTURE, L"textures\\enemies.png", D3DCOLOR_XRGB(156, 219, 239));
+	////textures->Add(ID_TEX_MISC, L"textures\\misc.png", D3DCOLOR_XRGB(156, 219, 239));
+
+	auto spriteManager = SpriteManager::getInstance();
+	auto animationManager = AnimationManager::getInstance();
+
+	auto textureMario = textureManager->get(ID_TEX_MARIO);
+
+	spriteManager->add(SPRITE_MARIO_FACE_RIGHT_1, 246, 154, 259, 181, textureMario);
+	spriteManager->add(SPRITE_MARIO_FACE_RIGHT_2, 275, 154, 290, 181, textureMario);
+	spriteManager->add(SPRITE_MARIO_FACE_RIGHT_3, 304, 154, 321, 181, textureMario);
+
+	spriteManager->add(SPRITE_MARIO_FACE_LEFT_1, 186, 154, 199, 181, textureMario);
+	spriteManager->add(SPRITE_MARIO_FACE_LEFT_2, 155, 154, 170, 181, textureMario);
+	spriteManager->add(SPRITE_MARIO_FACE_LEFT_3, 125, 154, 140, 181, textureMario);
+
+
+	auto animation = new Animation(100);
+	animation->add(SPRITE_MARIO_FACE_LEFT_1);
+	animation->add(SPRITE_MARIO_FACE_LEFT_2);
+	animation->add(SPRITE_MARIO_FACE_LEFT_3);
+
+	animationManager->add(ANIMATION_MARIO_FACE_LEFT,animation);
+
+	animation = new Animation(100);
+	animation->add(SPRITE_MARIO_FACE_RIGHT_1);
+	animation->add(SPRITE_MARIO_FACE_RIGHT_2);
+	animation->add(SPRITE_MARIO_FACE_RIGHT_3);
+	animationManager->add(ANIMATION_MARIO_FACE_RIGHT, animation);
+
+	animation = new Animation(100);
+	animation->add(SPRITE_MARIO_FACE_LEFT_1);
+	animationManager->add(ANIMATION_MARIO_IDLE_LEFT,animation);
+
+	animation = new Animation(100);
+	animation->add(SPRITE_MARIO_FACE_RIGHT_1);
+	animationManager->add(ANIMATION_MARIO_IDLE_RIGHT,animation);
+
+	mario = new Mario();
+	Mario::addAnimation(ANIMATION_MARIO_FACE_LEFT);
+	Mario::addAnimation(ANIMATION_MARIO_FACE_RIGHT);
+	Mario::addAnimation(ANIMATION_MARIO_IDLE_LEFT);
+	Mario::addAnimation(ANIMATION_MARIO_IDLE_RIGHT);
+
+	mario->setPosition(10.f, 100.f);
 }
 
 void update(DWORD dt) {
-	gameObject->update(dt);
+	mario->update(dt);
 }
 
 void render() {
@@ -128,9 +209,10 @@ void render() {
 
 		spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
 
+		mario->render();
 
-		gameObject->render();
 
+		
 
 		spriteHandler->End();
 		d3ddv->EndScene();
