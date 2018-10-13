@@ -102,6 +102,9 @@
     <ClInclude Include="debug.h">
       <Filter>Header Files\Ultilities</Filter>
     </ClInclude>
+    <ClInclude Include="GameObjectManger.h">
+      <Filter>Header Files\GameManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -136,6 +139,9 @@
     </ClCompile>
     <ClCompile Include="debug.cpp">
       <Filter>Source Files\Ultilities</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjectManger.cpp">
+      <Filter>Source Files\GameManager</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

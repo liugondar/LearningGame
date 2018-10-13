@@ -8,6 +8,10 @@ class Mario :
 public:
 	void update(DWORD dt);
 	void render();
-	void setState(int state);
+	void checkBound();
+
+	void updateVelocity();
+	void checkOutOfGround();
+
 };
 

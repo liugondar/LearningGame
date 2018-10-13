@@ -3,6 +3,7 @@
 #include "KeyboardHandler.h"
 
 #include "GameObject.h"
+#include "GameObjectManger.h"
 #include "Mario.h"
 
 #include "AnimationManager.h"

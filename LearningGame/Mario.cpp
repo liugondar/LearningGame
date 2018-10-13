@@ -1,10 +1,44 @@
 #include "Mario.h"
-
+// Update mario atribute ( state, position) when mario receive events
 void Mario::update(DWORD dt)
 {
+	updateVelocity();
 	GameObject::update(dt);
 
 	// simple fall down
+	checkBound();
+}
+// Update velocity of marito
+void Mario::updateVelocity() {
+	switch (currentState)
+	{
+	case MARIO_STATE_WALKING_RIGHT:
+		vx = MARIO_WALKING_SPEED;
+		faceSide = FACE_TO_RIGHT;
+		break;
+
+	case MARIO_STATE_WALKING_LEFT:
+		vx = -MARIO_WALKING_SPEED;
+		faceSide = FACE_TO_LEFT;
+		break;
+
+	case MARIO_STATE_JUMP:
+		if (y == 100)
+			vy = -MARIO_JUMP_SPEED_Y;
+
+	case MARIO_STATE_IDLE:
+		vx = 0;
+		break;
+	}
+}
+// Check if mario out of area ( where mario is inValid) => set it to boundary
+void Mario::checkBound()
+{
+	checkOutOfGround();
+}
+// Check boundary in ground
+void Mario::checkOutOfGround()
+{
 	vy += MARIO_GRAVITY;
 	if (y > 100)
 	{
@@ -15,7 +49,7 @@ void Mario::update(DWORD dt)
 	if (vx > 0 && x > 290) x = 290;
 	if (vx < 0 && x < 0) x = 0;
 }
-
+// Render mario
 void Mario::render()
 {
 	int animationId;
@@ -32,29 +66,4 @@ void Mario::render()
 		animationId = ANIMATION_MARIO_FACE_LEFT;
 	}
 	animations[animationId]->render(x, y);
-}
-
-void Mario::setState(int state)
-{
-	GameObject::setState(state);
-	switch (state)
-	{
-	case MARIO_STATE_WALKING_RIGHT:
-		vx = MARIO_WALKING_SPEED;
-		faceSide= FACE_TO_RIGHT;
-		break;
-
-	case MARIO_STATE_WALKING_LEFT:
-		vx = -MARIO_WALKING_SPEED;
-		faceSide= FACE_TO_LEFT;
-		break;
-
-	case MARIO_STATE_JUMP:
-		if (y == 100)
-			vy = -MARIO_JUMP_SPEED_Y;
-
-	case MARIO_STATE_IDLE:
-		vx = 0;
-		break;
-	}
 }

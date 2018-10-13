@@ -29,7 +29,6 @@ void SampleKeyHander::KeyState(BYTE *states)
 	else mario->setState(MARIO_STATE_IDLE);
 }
 
-
 /// Create a window then display and running until exit message send
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	LPSTR lpCmdLine, int nCmdShow)
@@ -191,10 +190,12 @@ void loadResources() {
 	Mario::addAnimation(ANIMATION_MARIO_IDLE_RIGHT);
 
 	mario->setPosition(10.f, 100.f);
+
+	GameObjectManger::getInstance()->init(mario);
 }
 
 void update(DWORD dt) {
-	mario->update(dt);
+	GameObjectManger::getInstance()->update(dt);
 }
 
 void render() {
@@ -206,18 +207,11 @@ void render() {
 	{
 		// Clear back buffer with a color
 		d3ddv->ColorFill(bb, NULL, BACKGROUND_COLOR);
-
 		spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
-
-		mario->render();
-
-
-		
-
+		GameObjectManger::getInstance()->render();
 		spriteHandler->End();
 		d3ddv->EndScene();
 	}
-
 	// Display back buffer content to the screen
 	d3ddv->Present(NULL, NULL, NULL, NULL);
 }
