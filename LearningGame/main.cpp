@@ -8,6 +8,7 @@ SampleKeyHander * keyHandler;
 
 void SampleKeyHander::OnKeyDown(int KeyCode)
 {
+	DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
 	switch (KeyCode)
 	{
 	case DIK_SPACE:
@@ -18,6 +19,8 @@ void SampleKeyHander::OnKeyDown(int KeyCode)
 
 void SampleKeyHander::OnKeyUp(int KeyCode)
 {
+	DebugOut(L"[INFO] KeyUp: %d\n", KeyCode);
+
 }
 
 void SampleKeyHander::KeyState(BYTE *states)
@@ -34,7 +37,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	LPSTR lpCmdLine, int nCmdShow)
 {
 	HWND hWnd = createGameWindow(hInstance, nCmdShow,
-		SCREEN_WIDTH, SCREEN_HEIGHT);
+		320, 240);
 
 	game = Game::getInstance();
 	game->init(hWnd);
@@ -43,7 +46,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	game->initKeyboard(keyHandler);
 
 	loadResources();
-	//SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
+	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, 
+		SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
 
 	run();
 
@@ -145,6 +149,13 @@ void loadResources() {
 
 	textureManager->add(ID_TEX_MARIO, L"textures\\mario.png",
 		D3DCOLOR_XRGB(176, 224, 248));
+
+	textureManager->add(ID_TEX_MISC, L"textures\\misc.png",
+		D3DCOLOR_XRGB(176, 224, 248));
+	textureManager->add(ID_TEX_BBOX, L"textures\\bbox.png",
+		D3DCOLOR_XRGB(255, 255, 255));
+
+
 	////textures->Add(ID_ENEMY_TEXTURE, L"textures\\enemies.png", D3DCOLOR_XRGB(156, 219, 239));
 	////textures->Add(ID_TEX_MISC, L"textures\\misc.png", D3DCOLOR_XRGB(156, 219, 239));
 
@@ -161,6 +172,8 @@ void loadResources() {
 	spriteManager->add(SPRITE_MARIO_FACE_LEFT_2, 155, 154, 170, 181, textureMario);
 	spriteManager->add(SPRITE_MARIO_FACE_LEFT_3, 125, 154, 140, 181, textureMario);
 
+	auto texMisc = textureManager->get(ID_TEX_MISC);
+	spriteManager->add(SPRITE_BRICK, 408, 225, 424, 241, texMisc);
 
 	auto animation = new Animation(100);
 	animation->add(SPRITE_MARIO_FACE_LEFT_1);
@@ -183,6 +196,10 @@ void loadResources() {
 	animation->add(SPRITE_MARIO_FACE_RIGHT_1);
 	animationManager->add(ANIMATION_MARIO_IDLE_RIGHT,animation);
 
+	animation = new Animation(100);
+	animation->add(SPRITE_BRICK);
+	animationManager->add(ANIMATION_BRICK_IDLE, animation);
+
 	mario = new Mario();
 	Mario::addAnimation(ANIMATION_MARIO_FACE_LEFT);
 	Mario::addAnimation(ANIMATION_MARIO_FACE_RIGHT);
@@ -190,6 +207,30 @@ void loadResources() {
 	Mario::addAnimation(ANIMATION_MARIO_IDLE_RIGHT);
 
 	mario->setPosition(10.f, 100.f);
+
+	Brick::addAnimation(ANIMATION_BRICK_IDLE);
+
+	for (int i = 0; i < 5; i++)
+	{
+		auto *brick = new Brick();
+		brick->setPosition(100 + i * 48.0f, 74);
+		GameObjectManger::getInstance()->addBrick(brick);
+
+		brick = new Brick();
+		brick->setPosition(100 + i * 48.0f, 90);
+		GameObjectManger::getInstance()->addBrick(brick);
+
+		brick = new Brick();
+		brick->setPosition(84 + i * 48.0f, 90);
+		GameObjectManger::getInstance()->addBrick(brick);
+	}
+
+	for (int i = 0; i < 30; i++)
+	{
+		auto *brick = new Brick();
+		brick->setPosition(0 + i * 16.0f, 150);
+		GameObjectManger::getInstance()->addBrick(brick);
+	}
 
 	GameObjectManger::getInstance()->init(mario);
 }

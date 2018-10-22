@@ -10,9 +10,13 @@ void GameObjectManger::init(Mario * mario)
 void GameObjectManger::render()
 {
 	this->mario->render();
+	for (int i = 0; i < bricks.size(); i++)
+	{
+		bricks[i]->render();
+	}
 }
 
 void GameObjectManger::update(DWORD dt)
 {
-	mario->update(dt);
+	this->mario->update(dt,&bricks);
 }

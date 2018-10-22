@@ -41,7 +41,7 @@ void Game::init(HWND hWnd)
 }
 
 void Game::draw(float x, float y, LPDIRECT3DTEXTURE9 texture,
-int left,int right,int top, int bottom)
+int left,int right,int top, int bottom,int alpha)
 {
 	D3DXVECTOR3 p(x, y,0);
 	RECT r;
@@ -50,7 +50,7 @@ int left,int right,int top, int bottom)
 	r.right = right;
 	r.bottom = bottom;
 	spriteHandler->Draw(texture,&r, NULL,&p, 
-		D3DCOLOR_XRGB(255, 255, 255));
+		D3DCOLOR_XRGB(alpha,255, 255, 255));
 }
 
 void Game::processKeyboard()
@@ -77,11 +77,7 @@ void Game::processKeyboard()
 			return;
 		}
 	}
-
-	keyHandler->KeyState((BYTE *)&keyStates);
-
-
-
+		if(keyHandler != nullptr) keyHandler->KeyState((BYTE *)&keyStates);
 	// Collect all buffered events
 	DWORD dwElements = KEYBOARD_BUFFER_SIZE;
 	hr = didv->GetDeviceData(sizeof(DIDEVICEOBJECTDATA), keyEvents, &dwElements, 0);

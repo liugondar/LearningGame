@@ -2,6 +2,11 @@
 #include "Game.h"
 using namespace std;
 
+constexpr auto ID_TEX_MARIO = 0;
+constexpr auto ID_TEX_ENEMY = 10;
+constexpr auto ID_TEX_MISC = 20;
+constexpr auto ID_TEX_BBOX = -100;		//
+
 class TextureManager
 {
 private:

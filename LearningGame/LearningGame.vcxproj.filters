@@ -9,9 +9,6 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
-    <Filter Include="Header Files\Sprite">
-      <UniqueIdentifier>{b47e6dac-2d57-4979-b80d-809a45c91778}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Ultilities">
       <UniqueIdentifier>{80fa5ecf-f770-4ad4-bd3a-f95c0f501fc9}</UniqueIdentifier>
     </Filter>
@@ -20,9 +17,6 @@
     </Filter>
     <Filter Include="Header Files\Animation">
       <UniqueIdentifier>{e0d95566-b5c5-46a8-ab43-1baa9e572c5e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\TextureManager">
-      <UniqueIdentifier>{055b1b14-d9cd-4e1c-b312-0e5a2069906b}</UniqueIdentifier>
     </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
@@ -33,9 +27,6 @@
     </Filter>
     <Filter Include="Source Files\Sprite">
       <UniqueIdentifier>{66d90d80-41ba-4847-a161-cde8ca6934ea}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Texture">
-      <UniqueIdentifier>{b7e6df98-4d66-45b1-8320-e2e6355df399}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\GameObject">
       <UniqueIdentifier>{e553c875-00bf-4459-a485-b50cddaa685c}</UniqueIdentifier>
@@ -48,6 +39,12 @@
     </Filter>
     <Filter Include="Source Files\Ultilities">
       <UniqueIdentifier>{7f1aee99-45c2-468c-ad8a-d0a2a64e2375}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Constants">
+      <UniqueIdentifier>{79221f0e-287e-401a-ac6e-6f9b785983e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Sprite">
+      <UniqueIdentifier>{b47e6dac-2d57-4979-b80d-809a45c91778}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -69,15 +66,6 @@
     <ClInclude Include="AnimationFrame.h">
       <Filter>Header Files\Animation</Filter>
     </ClInclude>
-    <ClInclude Include="TextureManager.h">
-      <Filter>Header Files\TextureManager</Filter>
-    </ClInclude>
-    <ClInclude Include="mainConstants.h">
-      <Filter>Header Files\Ultilities</Filter>
-    </ClInclude>
-    <ClInclude Include="TextureContanst.h">
-      <Filter>Header Files\Ultilities</Filter>
-    </ClInclude>
     <ClInclude Include="AnimationManager.h">
       <Filter>Header Files\Animation</Filter>
     </ClInclude>
@@ -87,15 +75,6 @@
     <ClInclude Include="Mario.h">
       <Filter>Header Files\GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="MarioConstants.h">
-      <Filter>Header Files\Ultilities</Filter>
-    </ClInclude>
-    <ClInclude Include="AnimationConstants.h">
-      <Filter>Header Files\Ultilities</Filter>
-    </ClInclude>
-    <ClInclude Include="SpriteConstants.h">
-      <Filter>Header Files\Ultilities</Filter>
-    </ClInclude>
     <ClInclude Include="KeyboardHandler.h">
       <Filter>Header Files\GameManager</Filter>
     </ClInclude>
@@ -103,6 +82,21 @@
       <Filter>Header Files\Ultilities</Filter>
     </ClInclude>
     <ClInclude Include="GameObjectManger.h">
+      <Filter>Header Files\GameManager</Filter>
+    </ClInclude>
+    <ClInclude Include="SweptAABB.h">
+      <Filter>Header Files\Ultilities</Filter>
+    </ClInclude>
+    <ClInclude Include="eDirection.h">
+      <Filter>Header Files\Ultilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Box.h">
+      <Filter>Header Files\Ultilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Brick.h">
+      <Filter>Header Files\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureManager.h">
       <Filter>Header Files\GameManager</Filter>
     </ClInclude>
   </ItemGroup>
@@ -118,9 +112,6 @@
     </ClCompile>
     <ClCompile Include="Sprite.cpp">
       <Filter>Source Files\Sprite</Filter>
-    </ClCompile>
-    <ClCompile Include="TextureManager.cpp">
-      <Filter>Source Files\Texture</Filter>
     </ClCompile>
     <ClCompile Include="GameObject.cpp">
       <Filter>Source Files\GameObject</Filter>
@@ -142,6 +133,21 @@
     </ClCompile>
     <ClCompile Include="GameObjectManger.cpp">
       <Filter>Source Files\GameManager</Filter>
+    </ClCompile>
+    <ClCompile Include="eDirection.cpp">
+      <Filter>Source Files\Ultilities</Filter>
+    </ClCompile>
+    <ClCompile Include="Brick.cpp">
+      <Filter>Source Files\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="SweptAABB.cpp">
+      <Filter>Source Files\Ultilities</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureManager.cpp">
+      <Filter>Source Files\GameManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Box.cpp">
+      <Filter>Source Files\Ultilities</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -3,6 +3,18 @@
 #include "Sprite.h"
 using namespace std;
 
+
+constexpr auto SPRITE_MARIO_FACE_LEFT_1 = 10001;
+constexpr auto SPRITE_MARIO_FACE_LEFT_2 = 10002;
+constexpr auto SPRITE_MARIO_FACE_LEFT_3 = 10003;
+
+constexpr auto SPRITE_MARIO_FACE_RIGHT_1 = 10011;
+constexpr auto SPRITE_MARIO_FACE_RIGHT_2 = 10012;
+constexpr auto SPRITE_MARIO_FACE_RIGHT_3 = 10013;
+
+constexpr auto SPRITE_BRICK = 20001;
+
+
 class SpriteManager
 {
 private:

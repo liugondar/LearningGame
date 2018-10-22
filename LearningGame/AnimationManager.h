@@ -2,6 +2,14 @@
 #include "Animation.h"
 using namespace std;
 
+constexpr auto ANIMATION_MARIO_IDLE = 100;
+constexpr auto ANIMATION_MARIO_IDLE_LEFT = 101;
+constexpr auto ANIMATION_MARIO_IDLE_RIGHT = 102;
+constexpr auto ANIMATION_MARIO_FACE_LEFT = 103;
+constexpr auto ANIMATION_MARIO_FACE_RIGHT = 104;
+
+constexpr auto ANIMATION_BRICK_IDLE = 201;
+
 class AnimationManager {
 private:
 	static AnimationManager* instance;

@@ -5,6 +5,8 @@
 #include <unordered_map>
 #include"debug.h"
 #include <dinput.h>
+#include <vector>
+
 
 #include "KeyboardHandler.h"
 
@@ -33,7 +35,7 @@ private:
 public:
 	void init(HWND hWnd);
 	void draw(float x, float y, LPDIRECT3DTEXTURE9 texture,
-		int left,int right, int top, int bottom);
+		int left,int right, int top, int bottom,int alpha=255);
 
 	static Game * getInstance() {
 		if (instance == NULL) instance = new Game();
